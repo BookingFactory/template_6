@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>
+      {{website_data.page_title}}
+
+      {% if record and record.title %}
+        : {{record.title}}
+      {% elsif page and page.title %}
+        : {{page.title}}
+      {% elsif room and room.title %}
+        : {{room.title}}
+      {% endif %}
+    </title>
+
+    <meta name="engine" content="new" />
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+    {% if record and record.meta_description %}
+      <meta content="{{recrod.meta_description}}" name="description"/>
+    {% elsif page and page.meta_description %}
+      <meta content="{{page.meta_description}}" name="description"/>
+    {% elsif room and room.meta_description %}
+      <meta content="{{room.meta_description}}" name="description" />
+    {% else %}
+      <meta content="{{website_data.page_description}}" name="description" />
+    {% endif %}
+
+    <meta content="{{website_data.page_keywords}}" name="keywords"/>
+    <meta content="en_UK" property="og:locale"/>
+    <meta content="website" property="og:type"/>
+    <meta content="{{website_data.page_title}}" property="og:title"/>
+    <meta content="{{website_data.page_description}}" property="og:description"/>
+    <meta content="{{website_data.page_title}}" property="og:site_name"/>
+
+
+    <link rel="shortcut icon" href="{{ website_data.favicon | attachment_url: 'default' }}" type="image/png" />
+    <link href="{{ '/css/template.css' | file_url: website_data.template }}" rel="stylesheet" />
+
+    <style>
+      #home:before{
+        background-image: url('{{website_data.header_image | attachment_url: 'default'}}');
+      }
+    </style>
+
+    {% if website_data.brand_color %}
+      .features article .inner .facilities li i:before,
+      ul.feature-icons li:before,
+      input[type="submit"].special, input[type="reset"].special, input[type="button"].special, .button.special,
+      input[type="submit"].special:hover, input[type="reset"].special:hover, input[type="button"].special:hover, .button.special:hover,
+      #header,
+      .booking-form .background{
+        background-color: {{website_data.brand_color}} !important;
+      }
+      #header > nav ul li a.active,
+      a:hover,
+      .booking-form .form form .field button.submit, .booking-form .form form .field-control button.submit{
+        color: {{website_data.brand_color}} !important;
+      }
+    {% endif %}
+  </head>
+  <body>
+    <section id="header">
+      <header>
+        {% if website_data.logo_text == nil or website_data.logo_text == '' %}
+          <a href="{{ '' | link_to: website_data.link_object }}">
+            <span class="image avatar">
+              <img src="{{ website_data.logo | attachment_url: 'default'}}" />
+            </span>
+          </a>
+        {% else %}
+          <h1 id="logo">
+            <a href="{{ '' | link_to: website_data.link_object }}">
+              {{website_data.logo_text}}
+            </a>
+          </h1>
+        {% endif %}
+        <p>
+          {{website_data.header_text_1}}
+          <br/>
+          {{website_data.header_text_1}}
+        </p>
+      </header>
+      <nav id="nav">
+        <ul>
+          <li>
+            {% if website_data.request.path.include?('book') %}
+              <a class="active" href="{{'#home' | link_to: website_data.link_object}}">
+            {% else %}
+              <a href="{{'#home' | link_to: website_data.link_object }}">
+            {% endif %}
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="{{ '#features' | link_to: website_data.link_object }}">Features</a>
+          </li>
+          <li>
+            <a href="{{ '#rooms' | link_to: website_data.link_object }}">Our Rooms</a>
+          </li>
+          <li>
+            <a href="{{ '#contacts' | link_to: website_data.link_object}}">Contact</a>
+          </li>
+          <li>
+            {% if website_data.booking_link == nil or website_data.booking_link == "" %}
+              {% if website_data.request.path.include?('/book') %}
+                <a href="{{'/book' | link_to: website_data.link_object}}" class="booking-form-link active">
+              {% else %}
+                <a href="{{'/book' | link_to: website_data.link_object}}" class="booking-form-link">
+              {% endif %}
+                Book Now
+              </a>
+            {% else %}
+              <a href="{{website_data.booking_link}}">Book Now</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+      <footer>
+        <ul class="icons">
+          {% if website_data.twitter %}
+            <li>
+              <a class="icon fa-twitter" href="{{ website_data.twitter }}">
+                <span class="label">Twitter</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if website_data.facebook %}
+            <li>
+              <a class="icon fa-facebook" href="{{ website_data.facebook }}">
+                <span class="label">Facebook</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if website_data.linkedin %}
+            <li>
+              <a class="icon fa-linkedin" href="{{ website_data.linkedin }}">
+                <span class="label">LinkedIn</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if website_data.youtube %}
+            <li>
+              <a class="icon fa-youtube" href="{{ website_data.youtube }}">
+                <span class="label">YouTube</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if website_data.googleplus %}
+            <li>
+              <a class="icon fa-google-plus" href="{{ website_data.googleplus }}">
+                <span class="label">Google Plus</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if website_data.pinterest %}
+            <li>
+              <a class="icon fa-pinterest" href="{{ website_data.pinterest }}">
+                <span class="label">Pinterest</span>
+              </a>
+            </li>
+          {% endif %}
+          <li>
+            <a class="icon fa-envelope" href="mailto:{{ website_data.email_address }}">
+              <span class="label">Email</span>
+            </a>
+          </li>
+        </ul>
+      </footer>
+    </section>
+    <div id="wrapper">
+      {{content}}
+    </div>
+
+    <script src="{{ '/js/template.js' | file_url: website_data.template }}"></script>
+  </body>
+</html>

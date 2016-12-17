@@ -1,0 +1,179 @@
+<!-- Main -->
+<div id="main">
+
+  <!-- One -->
+  <section id="home">
+    <div class="container">
+      {{website_data.text_area}}
+    </div>
+  </section>
+
+  <!-- Two -->
+  <section id="features">
+    <div class="container">
+      <h3>
+        {{website_data.features_title}}
+      </h3>
+      <p>
+        {{website_data.features_section_description}}
+      </p>
+      <ul class="feature-icons">
+        {% for feature in website_data.features %}
+          <li class="fa-{{feature.icon}}">
+            {{feature.title}}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Three -->
+  <section id="rooms">
+    <div class="container">
+      <h3>
+        {{website_data.room_section_title}}
+      </h3>
+      <p>
+        {{website_data.room_section_description}}
+      </p>
+      <div class="features">
+        {% for room in website_data.rooms %}
+          {% if room.visible == true and room.room_type.photos.size > 0 %}
+            <article>
+              {% if website_data.booking_link == nil or website_data.booking_link == "" %}
+                <a href="{{'/book' | link_to: website_data.link_object}}" class="image">
+                  <img src="{{room.room_type.photos.first.image | attachment_url: 'public'}}" />
+                  <span class="button special small fit booking-form-link">Book Now</span>
+                </a>
+              {% else %}
+                <a href="{{website_data.booking_link}}" class="image">
+                  <img src="{{room.room_type.photos.first.image | attachment_url: 'public'}}" />
+                  <span class="button special small fit">Book Now</span>
+                </a>
+              {% endif %}
+              <div class="inner">
+                <h4>
+                  {{room.name}}
+                </h4>
+                {{room.description}}
+                <ul class="facilities">
+                  {% for facility in room.room_type.facilities %}
+                    <li>
+                      {% if facility.icon %}
+                        <i class="fa-{{facility.icon}} fa"></i>
+                      {% else %}
+                        <i class="fa-circle fa"></i>
+                      {% endif %}
+                      {{ facility.title | get_translation: website_data.id, website_data.lang }}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+        {% for room in website_data.custom_rooms %}
+          {% if room.visible == true and room.website_custom_room_photos.size > 0 %}
+            <article>
+              <a href="#" class="image">
+                <img src="{{room.website_custom_room_photos.first.image | attachment_url: 'public' }}" />
+                <div class="inner">
+                  <h4>
+                    {{room.title}}
+                  </h4>
+                  {{room.description}}
+                </div>
+              </a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section id="contacts">
+    <div id="map-canvas" style="height:300px;"></div>
+    {% if website_data.map_center_lat and website_data.map_center_lng %}
+      <script>
+        var zoom = {{website_data.map_zoom_level}};
+        var lat = {{website_data.map_center_lat}};
+        var lng = {{website_data.map_center_lng}};
+
+        function initialize() {
+          var myOptions = {
+              zoom: zoom,
+              center: new google.maps.LatLng(lat, lng),
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              scrollwheel: false
+          }
+          map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+
+          var marker = new google.maps.Marker({
+              map: map,
+              position: new google.maps.LatLng(lat, lng)
+          });
+        }
+
+        function loadScript() {
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
+              '&signed_in=true&callback=initialize&key=AIzaSyCxqPAlL6tmp-Wny3tC0e_byl-jOxzu_QA';
+          document.body.appendChild(script);
+        }
+
+        loadScript();
+
+      </script>
+    {% endif %}
+  </section>
+
+  <!-- Contacts -->
+  <section>
+    <div class="container">
+      <h3>
+        {{website_data.contact_area_title}}
+      </h3>
+      <p>
+        {{website_data.contact_description_text}}
+      </p>
+      <form method="post" action="/send_email" id="contact-form">
+        <input name="part_a" type="hidden" value="{{website_data.rand_a}}"></input>
+        <input name="part_b" type="hidden" value="{{website_data.rand_b}}"></input>
+        <div class="row uniform">
+          <div class="12u(xsmall) 6u">
+            <input id="name" name="name" placeholder="Name" type="text"></input>
+          </div>
+          <div class="12u(xsmall) 6u">
+            <input id="email" name="email" placeholder="Email" type="email"></input>
+          </div>
+        </div>
+        <div class="row uniform">
+          <div class="12u">
+            <textarea id="message" name="message" placeholder="Message" rows="6"></textarea>
+          </div>
+        </div>
+        <div class="row uniform">
+          <div class="12u(xsmall) 6u">
+            <input id="name" name="answer" placeholder="{{website_data.rand_a}} + {{website_data.rand_b}} = ..." type="text"></input>
+          </div>
+          <div class="6u">
+            <ul class="actions">
+              <li>
+                <input class="special" type="submit" value="Send Message"></input>
+              </li>
+              <li>
+                <input type="reset" value="Reset Form"></input>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  {% include 'footer' %}
+
+</div>

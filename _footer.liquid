@@ -1,0 +1,47 @@
+<section id="footer">
+  <div class="container">
+    <ul class="copyright">
+      <li>
+        © {{website_data.hotel_name}}. All rights reserved.
+        {% for link in website_data.footer_links %}
+          {% if link.category == 'Predefined Link' %}
+            {% if link.value == 'home' %}
+              <a href="{{ '' | link_to: website_data.link_object }}">{{link.title}}</a>
+            {% elsif link.value == 'features' %}
+              <a href="{{ '#features' | link_to: website_data.link_object }}">{{link.title}}</a>
+            {% elsif link.value == 'contacts' %}
+              <a href="{{ '/contacts' | link_to: website_data.link_object }}">{{link.title}}</a>
+            {% elsif link.value == 'faq' %}
+              <a href="{{ '/faq' | link_to: website_data.link_object  }}">{{link.title}}</a>
+            {% elsif link.value == 'about' %}
+              <a href="{{ '/about' | link_to: website_data.link_object}}">{{link.title}}</a>
+            {% elsif link.value == 'blog' %}
+              <a href="{{ '/blog' | link_to: webstie_data.link_object }}">{{link.title}}</a>
+            {% elsif link.value == 'terms-and-conditions' %}
+              <a href="{{'/terms-and-conditions' | link_to: website_data.link_object}}">{{link.title}}</a>
+            {% elsif link.value == 'prviacy-policy' %}
+              <a href="{{ '/privacy-policy' | link_to: website_data.link_object}}">{{link.title}}</a>
+            {% elsif link.value == 'booking' %}
+              {% if website_data.booking_link == nil or website_data.booking_link == "" %}
+                <a href="{{'/book' | link_to: website_data.link_object}}">{{link.title}}</a>
+              {% else %}
+                <a href="{{website_data.booking_link}}">{{link.title}}</a>
+              {% endif %}
+            {% endif %}
+          {% elsif link.category == 'Custom Page Link' %}
+            <a href="{{ link.value | link_to: website_data.link_object }}">{{link.title}}</a>
+          {% elsif link.category == 'Blog Recrod Page' %}
+            <a href="{{ '/blog/' | append: link.value | link_to: website_data.link_object }}">{{link.title}}</a>
+          {% elsif link.category == 'Room Page Link' %}
+            <a href="{{link.value | link_to: website_data.link_object}}">{{link.title}}</a>
+          {% else %}
+            <a href="{{link.value | link_to: website_data.link_object}}">{{link.title}}</a>
+          {% endif %}
+        {% endfor %}
+      </li>
+      <li>
+        Powered by: <a href="http://thebookingfactory.com">thebookingfactory.com</a>
+      </li>
+    </ul>
+  </div>
+</section>
