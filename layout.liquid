@@ -43,23 +43,23 @@
       #home:before{
         background-image: url('{{website_data.header_image | attachment_url: 'default'}}');
       }
-    </style>
 
-    {% if website_data.brand_color %}
-      .features article .inner .facilities li i:before,
-      ul.feature-icons li:before,
-      input[type="submit"].special, input[type="reset"].special, input[type="button"].special, .button.special,
-      input[type="submit"].special:hover, input[type="reset"].special:hover, input[type="button"].special:hover, .button.special:hover,
-      #header,
-      .booking-form .background{
-        background-color: {{website_data.brand_color}} !important;
-      }
-      #header > nav ul li a.active,
-      a:hover,
-      .booking-form .form form .field button.submit, .booking-form .form form .field-control button.submit{
-        color: {{website_data.brand_color}} !important;
-      }
-    {% endif %}
+      {% if website_data.brand_color %}
+        .features article .inner .facilities li i:before,
+        ul.feature-icons li:before,
+        input[type="submit"].special, input[type="reset"].special, input[type="button"].special, .button.special,
+        input[type="submit"].special:hover, input[type="reset"].special:hover, input[type="button"].special:hover, .button.special:hover,
+        #header,
+        .booking-form .background{
+          background-color: {{website_data.brand_color}} !important;
+        }
+        #header > nav ul li a.active,
+        a:hover,
+        .booking-form .form form .field button.submit, .booking-form .form form .field-control button.submit{
+          color: {{website_data.brand_color}} !important;
+        }
+      {% endif %}
+    </style>
   </head>
   <body>
     <section id="header">
