@@ -143,15 +143,15 @@
         <input name="part_b" type="hidden" value="{{website_data.rand_b}}"></input>
         <div class="row uniform">
           <div class="12u(xsmall) 6u">
-            <input id="name" name="name" placeholder="Name" type="text"></input>
+            <input id="name" name="name" placeholder="{{ 'Name' | t: website_data.lang }}" type="text"></input>
           </div>
           <div class="12u(xsmall) 6u">
-            <input id="email" name="email" placeholder="Email" type="email"></input>
+            <input id="email" name="email" placeholder="{{ 'Email' | t: website_data.lang }}" type="email"></input>
           </div>
         </div>
         <div class="row uniform">
           <div class="12u">
-            <textarea id="message" name="message" placeholder="Message" rows="6"></textarea>
+            <textarea id="message" name="message" placeholder="{{ 'Message' | t: website_data.lang }}" rows="6"></textarea>
           </div>
         </div>
         <div class="row uniform">
@@ -161,7 +161,7 @@
           <div class="6u">
             <ul class="actions">
               <li>
-                <input class="special" type="submit" value="Send Message"></input>
+                <input class="special" type="submit" value="{{ 'Send Message' | t: website_data.lang }}"></input>
               </li>
               <li>
                 <input type="reset" value="Reset Form"></input>
